@@ -5,18 +5,28 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
-        counts = {}
+        count = {}
+        buckets = [[] for i in range(len(nums) + 1)]
 
         for n in nums:
-            if n in counts:
-                counts[n] += 1
-            else:
-                counts[n] = 1
+            # oooo w/ get() you can set default value to zero if it doesn't exist :0
+            count[n] = 1 + count.get(n, 0)
 
-        # welp... this is prolly n log n, we can do it a lot faster
-        return sorted(counts,key=counts.get)[-k::]
+        # dict.items() returns the pairs! v convenient
+        for n, c in count.items():
+            buckets[-c].append(n)
 
+        output = []
+
+        for bucket in buckets:
+            for item in bucket:
+                output.append(item)
+            
+            if len(output) == k:
+                return output
+
+        # This is O(n) (because it's O(2n))   
 
 sol = Solution()
 
-print(sol.topKFrequent([1],1))
+print(sol.topKFrequent([1,1,1,2,2,3],2))

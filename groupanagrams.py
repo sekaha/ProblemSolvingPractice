@@ -15,6 +15,8 @@ class Solution(object):
             else:
                 groups[identifier] = [str]
 
+        print(type(groups.values()))
+
         return groups.values()
 
 sol = Solution()
