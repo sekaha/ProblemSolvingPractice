@@ -7,6 +7,7 @@ class Solution(object):
         groups = {}
 
         for str in strs:
+            #somehow this is more efficient then not sorting it (i.e. manually going through and keeping track of letters)
             identifier = ''.join(sorted(str))
             
             if identifier in groups:
@@ -18,4 +19,4 @@ class Solution(object):
 
 sol = Solution()
 
-print(sol.groupAnagrams(["eat","tea","tan","ate","nat","bat"]))
+sol.groupAnagrams(["eat","tea","tan","ate","nat","bat"])
