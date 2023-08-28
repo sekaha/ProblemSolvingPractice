@@ -1,15 +1,17 @@
 from typing import List
-from functools import reduce
-from operator import mul
 
 class Solution:
     def productExceptSelf(self, nums: List[int]) -> List[int]:
-        result = []
+        result = [1]*len(nums)
+        pre, post = 1, 1
 
         for i in range(len(nums)):
-            result.append(reduce(mul,nums[:i]+nums[i+1:],1))
+            result[i] *= pre
+            pre  *= nums[i]
+            result[len(nums)-i-1] *= post
+            post *= nums[len(nums)-i-1]
 
         return result
 
 sol = Solution()
-print(sol.productExceptSelf([1,2,3,4]))
+print(sol.productExceptSelf([-1,1,0,-3,3]))
