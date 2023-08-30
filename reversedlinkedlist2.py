@@ -9,15 +9,11 @@ class Solution(object):
     def reverseList(self, head):
         cur_node = head
         prev = None
-        new_next = None
-
-        if cur_node == None:
-            return None
 
         while cur_node != None:
-            prev = cur_node
+            new = cur_node
             cur_node = cur_node.next
-            prev.next = new_next
-            new_next = prev
+            new.next = prev
+            prev = cur_node
 
         return prev
