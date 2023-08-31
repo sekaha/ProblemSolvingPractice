@@ -12,9 +12,7 @@ class Solution(object):
         :rtype: bool
         """
         if p and q and p.val == q.val:
-            same  = self.isSameTree(p.left,q.left)
-            same &= self.isSameTree(p.right,q.right)
-            return same
+            return self.isSameTree(p.left,q.left) and self.isSameTree(p.right,q.right)
     
         if not p and not q:
             return True
