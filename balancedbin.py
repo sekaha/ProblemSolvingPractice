@@ -8,34 +8,17 @@ from math import ceil
 #         self.right = right
 class Solution(object):
     def isBalanced(self, root):
-        frontier = [root]
-        layers = 0
-        nodes = 0
+        stack = [(root,0.0)]
+        prev_depth = 0
 
-        if root == None:
-            return True
+        while stack:
+            node, depth = stack.pop()
 
-        while frontier:
-            new_frontier = []
-            layer_dif = [2,0]
-
-            for node in frontier:
-                nodes += 1
-                dif = 0
-
-                if node.left:
-                    dif += 1
-                    new_frontier.append(node.left)
-                if node.right:
-                    dif +=1
-                    new_frontier.append(node.right)
+            if node:
+                stack += (node.left,depth+1),(node.right,depth+1)
                 
-                layer_dif = [min(layer_dif[0],dif),max(layer_dif[1],dif)]
-
-            frontier = new_frontier
-
-            if layer_dif[1]-layer_dif[0] > 1:
-                return False
-
+                print(prev_depth,depth)
+                
+                prev_depth = depth
 
         return True
