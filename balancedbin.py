@@ -17,18 +17,25 @@ class Solution(object):
 
         while frontier:
             new_frontier = []
+            layer_dif = [2,0]
 
             for node in frontier:
-                    nodes += 1
+                nodes += 1
+                dif = 0
 
-                    if node.left:
-                        new_frontier.append(node.left)
-                    if node.right:
-                        new_frontier.append(node.right)
+                if node.left:
+                    dif += 1
+                    new_frontier.append(node.left)
+                if node.right:
+                    dif +=1
+                    new_frontier.append(node.right)
+                
+                layer_dif = [min(layer_dif[0],dif),max(layer_dif[1],dif)]
 
             frontier = new_frontier
-            layers += 1
 
-        print(layers, nodes)
-        
-        return (layers) == ceil(nodes**0.5)
+            if layer_dif[1]-layer_dif[0] > 1:
+                return False
+
+
+        return True
