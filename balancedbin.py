@@ -8,17 +8,16 @@ from math import ceil
 #         self.right = right
 class Solution(object):
     def isBalanced(self, root):
-        stack = [(root,0.0)]
-        prev_depth = 0
-
-        while stack:
-            node, depth = stack.pop()
-
+        def dfs(node):
             if node:
-                stack += (node.left,depth+1),(node.right,depth+1)
-                
-                print(prev_depth,depth)
-                
-                prev_depth = depth
+                l_d, l_b = dfs(node.left)
+                r_d, r_b = dfs(node.right)
 
-        return True
+                depth = max(l_d,r_d)
+                balanced = (l_b and r_b) and (abs(l_d-r_d) <= 1)
+
+                return depth+1, balanced
+            else:
+                return 0, True
+
+        return dfs(root)[1]
