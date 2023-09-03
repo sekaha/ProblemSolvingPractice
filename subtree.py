@@ -11,24 +11,21 @@ class Solution(object):
         :type subRoot: TreeNode
         :rtype: bool
         """
+
+        def match(a,b):
+            # both None so they match
+            if not a and not b:
+                return True
+            # 
+            if not a or not b:
+                return False
+
+            return a.val == b.val and match(a.left,b.left) and match(a.right,b.right)
+
+        if not root:
+            return False
         
-        def match(node,sub):
-            if sub:
-                if node:
-                    # if the val's of sub tree and main tree nodes are the same, advance to the next to see if this pattern continues down to the None nodes
-                    if node.val == sub.val:
-                        return match(node.left,sub.left) and match(node.right,sub.right)
-                    # they are not the same, so keep searching from the ORIGINAL subroot
-                    else:
-                        return match(node.left,subRoot) or match(node.right,subRoot)
-                else:
-                    # the main tree terminated without finding all the pairs
-                    return False
-            else:
-                # the sub tree terminated, but there might be one more node in the main tree that disqualifies the sub tree
-                if node: # if there's another node, keep searching for subtree
-                    return match(node,subRoot)
-                else:
-                    return True
+        if match(root,subRoot):
+            return True
         
-        return match(root,subRoot)
+        return self.isSubtree(root.left,subRoot) or self.isSubtree(root.right,subRoot)
