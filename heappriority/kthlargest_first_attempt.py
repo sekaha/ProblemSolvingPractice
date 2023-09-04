@@ -34,15 +34,21 @@ class KthLargest:
             if parent > 0:
                 self.heapify_up(parent)
 
-    def add(self, val: int) -> int:
+    def heap_pop(self):
+        self.mh[0] = self.mh[len(self.mh)-1]
+        self.mh = self.mh[:-1]
+        self.heapify_down(0)
+
+    def heap_push(self,val):
         self.mh.append(val)
         self.heapify_up(len(self.mh)-1)
 
+    def add(self, val: int) -> int:
+        self.heap_push(val)
+
         while len(self.mh) > self.k:
-            self.mh[0] = self.mh[len(self.mh)-1]
-            self.mh = self.mh[:-1]
-            self.heapify_down(0)
-        
+            self.heap_pop()
+
         return self.mh[0]
 
 
