@@ -2,54 +2,54 @@ from typing import List
 
 class KthLargest:
     def __init__(self, k: int, nums: List[int]):
-        self.k = k
         self.nums = nums
+        self.k = k
 
-        # build heap, aka heapify down to the leaf nodes (nodes/2)
-        for i in range(len(self.nums)//2-1,-1,-1):
-            self.heapify(self.nums,i)
+        for i in range(len(self.nums),-1,-1):
+            self.heapify_down(self.nums,i)
 
-    def heapify(self,arr,i):
-        # get left and right child indices
-        l, r = 2*i+1, 2*i + 2
+    def heapify_down(self,nums,i):
+        l, r = i*2+1, i*2+2
         largest = i
 
-        # set largest element
-        if len(arr) > l:
-            if arr[l] > arr[largest]:
+        if l < len(nums):
+            if nums[l] < nums[largest]:
                 largest = l
-        
-        if len(arr) > r:
-            if arr[r] > arr[largest]:
+
+        if r < len(nums):
+            if nums[r] < nums[largest]:
                 largest = r
 
-        # swap largest element and current element
         if largest != i:
-            arr[i], arr[largest] = arr[largest], arr[i]
+            # swap and recurse up
+            nums[i], nums[largest] = nums[largest], nums[i]
+            self.heapify_down(nums, largest)
+        
+    def heapify_up(self,nums,i):
+        parent = (i-1)//2
 
-            self.heapify(arr, largest)
+        if nums[i] < nums[parent]:
+            nums[i], nums[parent] =  nums[parent], nums[i]
 
-    def heapify_up(self, arr, i):
-        parent = (i-1) // 2
-
-        if arr[i] > arr[parent]:
-            arr[i], arr[parent] = arr[parent], arr[i]
-            
             if parent > 0:
-                self.heapify_up(arr,parent)
+                self.heapify_up(nums,parent)
 
     def add(self, val: int) -> int:
-        # heapify newly inserted element at end of list
         self.nums.append(val)
+
+        print(self.nums)
         self.heapify_up(self.nums,len(self.nums)-1)
+        print(self.nums)
 
-        return self.nums[self.k-1]
+        return self.nums[0]
 
+
+# Your KthLargest object will be instantiated and called as such:
+# obj = KthLargest(k, nums)
+# param_1 = obj.add(val)
 kthLargest = KthLargest(3, [4, 5, 8, 2])
-
-print(kthLargest.add(3))  # return 4
-print(kthLargest.add(5))  # return 5
-print(kthLargest.add(10)) # return 5
-print(kthLargest.add(9))  # return 8
-print(kthLargest.add(4))  # return 8
-
+print(kthLargest.add(3))   # return 4
+print(kthLargest.add(5))   # return 5
+print(kthLargest.add(10))  # return 5
+print(kthLargest.add(9))   # return 8
+print(kthLargest.add(4))   # return 8
