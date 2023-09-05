@@ -10,4 +10,4 @@ class Solution:
         return v
 
 sol = Solution()
-print(sol.climbStairs(6))
+print(sol.climbStairs(44))
