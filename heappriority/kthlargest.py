@@ -5,7 +5,8 @@ class KthLargest:
         self.mh = nums
         self.k = k
 
-        for i in range(len(self.mh),-1,-1):
+        print(self.mh)
+        for i in range(len(self.mh)//2-1,-1,-1):
             self.heapify_down(i)
         
     def heapify_down(self,i):
