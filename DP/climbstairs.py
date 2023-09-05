@@ -4,7 +4,10 @@ class Solution:
     def climbStairs(self, n: int) -> int:
         if n in stairs_memo:
             return stairs_memo[n]        
-        return self.climbStairs(n-1)+self.climbStairs(n-2)
+        
+        v = self.climbStairs(n-1)+self.climbStairs(n-2)
+        stairs_memo[n] = v
+        return v
 
 sol = Solution()
 print(sol.climbStairs(6))
