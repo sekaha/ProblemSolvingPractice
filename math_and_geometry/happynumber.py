@@ -1,17 +1,16 @@
 class Solution:
     def isHappy(self, n: int) -> bool:
-        seen = set()
-        
-        while True:
-            n = sum([int(c)**2 for c in str(n)])
-            
-            if n in seen:
-                return False
-            
-            if n == 1:
-                return True
+        sum_squared_digits = lambda x: sum([int(c)**2 for c in str(x)])
+        slow = n
+        fast = sum_squared_digits(n)
 
-            seen.add(n)
+        while fast!=slow:
+            fast = sum_squared_digits(fast)
+            fast = sum_squared_digits(fast)
+            slow = sum_squared_digits(slow)
+
+        return fast == 1
+
 
 sol = Solution()
-print(sol.isHappy((7)))
+print(sol.isHappy((2)))
