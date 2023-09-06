@@ -3,23 +3,17 @@ from typing import List
 class Solution:
     def merge(self, intervals: List[List[int]]) -> List[List[int]]:
         ordered = sorted(intervals,key=lambda x: x[0])
-        start_time, end_time = ordered[0][0], ordered[0][1]
-        output = []
+        out = [ordered[0]]
 
-        for i, (start, end) in enumerate(ordered):
-            # if it wasn't merged with the last element and is also the last element
-            if i == (len(ordered)-1) and end_time != end:
-                output.append((ordered[-1]))
+        for start, end in ordered[1:]:
+            # if this interval started before the last one ended, there is overlap
+            if start <= out[-1][1]:
+                out[-1][1] = max(end,out[-1][1]) # this is important for events that can be entirely contained within another
             else:
-                end_time = end
-                # if this one ends after the next interval starts
-                if end > ordered[i+1][0]:
-                    end_time = ordered[i+1][1]
-                else:
-                    output.append([start_time,end_time])
-                    start_time = ordered[i+1][0]
-
-        print(output)
+                out.append([start,end])
+        
+        return out
 
 sol = Solution()
 sol.merge([[15,18],[1,3],[2,6],[8,10]])
+sol.merge([[1,4],[2,3]])
