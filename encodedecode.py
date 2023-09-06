@@ -1,5 +1,3 @@
-import re
-
 class Solution:
     """
     @param: strs: a list of strings

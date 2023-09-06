@@ -31,7 +31,7 @@ class KthLargest:
         if self.mh[i] < self.mh[parent]:
             self.mh[i], self.mh[parent] =  self.mh[parent], self.mh[i]
 
-            if parent >= 0:
+            if parent > 0:
                 self.heapify_up(parent)
 
     def heap_pop(self):
