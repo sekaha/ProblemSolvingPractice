@@ -11,7 +11,7 @@ class Solution(object):
 
         while stack:
             node, visited = stack.pop()
-
+            
             if node:
                 if visited:
                     l_d = depths.get(node.left,0)
