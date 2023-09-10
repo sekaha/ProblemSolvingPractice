@@ -1,5 +1,6 @@
 class Solution:
     def largestPalindrome(self, n: int) -> int:
+        checks = 0
         if n == 1:
             return 9
 
@@ -12,9 +13,10 @@ class Solution:
 
             # Check if this palindrome can be represented as the product of two n-digit integers
             for i in range(max_num, int(palindrome ** 0.5) - 1, -1):
+                checks += 1
                 if palindrome % i == 0 and palindrome // i <= max_num:
+                    print(checks)
                     return palindrome % 1337
-
 sol = Solution()
 
 for n in range(1,9):
