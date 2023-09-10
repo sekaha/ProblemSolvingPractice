@@ -1,3 +1,4 @@
+"""Module providingFunction printing python version."""
 from typing import List
 
 
@@ -10,7 +11,6 @@ class Solution:
             sub_sum = max(n, sub_sum + n)
             max_sum = max(max_sum, sub_sum)
 
-        # this is not the optimal way, but I wanted to keep in tact the ARRAY thinking, anyways I'll write a better solution now
         return max_sum
 
 
