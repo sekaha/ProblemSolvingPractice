@@ -1,16 +1,28 @@
 from typing import List
+from time import time
+
 
 class Solution:
     def generateParenthesis(self, n: int) -> List[str]:
-        def gen(left,right,out=""):
+        stack = []
+
+        def gen(left, right):
             if not left and not right:
-                yield out
+                yield "".join(stack)
             if left:
-                yield from gen(left-1,right,out+"(")
+                stack.append("(")
+                yield from gen(left - 1, right)
+                stack.pop()
             if right > left:
-                yield from gen(left,right-1,out+")")
-        
-        return list(gen(n,n))
+                stack.append(")")
+                yield from gen(left, right - 1)
+                stack.pop()
+
+        return list(gen(n, n))
+
 
 sol = Solution()
-print(sol.generateParenthesis(3))
+
+start = time()
+sol.generateParenthesis(12)
+print(time() - start)
