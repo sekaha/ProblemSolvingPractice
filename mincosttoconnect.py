@@ -20,39 +20,18 @@ class Solution:
             zip(edges.keys(), edges.values()), key=lambda x: edges[x[0]], reverse=True
         )
 
-        # while there's still a cycle, remove the largest edge until there is not
-        i = 0
+        # remove edges if they are cyclic until we have
         edges_removed = 0
         ret = 0
 
-        # while i < len(sorted_edges):
-        #    (a, b), v = sorted_edges[i]
-        #
-        #    if edges_removed < len(points) + 1:
-        #        if self.cycle(graph, a) or self.cycle(graph, b):
-        #            edges_removed += 1
-        #            graph[a][b] = -1
-        #        else:
-        #            ret += v
-        #    else:
-        #        print((a, b))
-        #        ret += v
-        #
-        #    i += 1
-
         for (a, b), cost in sorted_edges:
-            if edges_removed < len(points) + 1:
-                if self.cycle(graph, a):  # or self.cycle(graph, b):
-                    edges_removed += 1
-                    graph[a][b] = -1
-                    graph[b][a] = -1
-                else:
-                    print(f"({a},{b})", cost)
-                    ret += cost
+            if edges_removed < len(points) + 1 and self.cycle(graph, b):
+                edges_removed += 1
+                graph[a][b] = -1
+                graph[b][a] = -1
             else:
-                print(f"({a},{b})", cost)
                 ret += cost
-        print(ret)
+
         return ret
 
     def cycle(self, graph, edge) -> bool:
@@ -64,7 +43,6 @@ class Solution:
             node, parent = stack.pop()
 
             if node == edge:
-                print("found")
                 return True
             else:
                 if node not in visited:
@@ -81,4 +59,4 @@ class Solution:
 
 
 sol = Solution()
-sol.minCostConnectPoints(([[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]))
+print(sol.minCostConnectPoints(([[3, 12], [-2, 5], [-4, 1]])))
