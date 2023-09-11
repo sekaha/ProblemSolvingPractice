@@ -15,8 +15,6 @@ class Solution:
             for v2 in range(v1 + 1, len(points))
         }
 
-        print(costs)
-
         # prims!
         # an indice set that represents the MST
         mst = set()
