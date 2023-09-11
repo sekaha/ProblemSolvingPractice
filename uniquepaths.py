@@ -1,24 +1,19 @@
+from functools import reduce
+
+
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        def recursive(a=1, b=1):
-            if a == m and b == n:
-                return 1  # base case, path found
+        def choose(n, k):
+            fact = (
+                lambda x: reduce(lambda a, b: a * b, range(1, x + 1)) if (x > 0) else 1
+            )
+            return int(fact(n) / (fact(k) * fact(n - k)))
 
-            l, r = 0, 0
-
-            if a != m:
-                l = recursive(a + 1, b)
-
-            if b != n:
-                r = recursive(a, b + 1)
-
-            return r + l
-
-        return recursive()
+        return choose(n + (m - 2), m - 1)
 
 
 sol = Solution()
 
-for x in range(1, 10):
-    for y in range(1, 10):
-        print(x, y, sol.uniquePaths(x, y))
+# for x in range(1, 5):
+#    for y in range(1, 10):
+print(sol.uniquePaths(3, 7))
