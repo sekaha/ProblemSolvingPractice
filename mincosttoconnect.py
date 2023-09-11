@@ -77,7 +77,6 @@ class Solution:
 
                     visited.add(node)
 
-        print("cleared")
         return False  # went through all the nodes no cycle babyyy
 
 
