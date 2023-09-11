@@ -3,27 +3,27 @@ class Solution:
         runs = 0
         memo = {}
 
-        def recursive(a=1, b=1):
+        def recursive(x=1, y=1):
             nonlocal runs
             runs += 1
 
-            if (a, b) in memo:
-                return memo[a, b]
+            if (x, y) in memo:
+                return memo[x, y]
 
-            if a == m and b == n:
+            if x == m and y == n:
                 return 1  # base case, path found
 
             l, r = 0, 0
 
-            if a != m:
-                l = recursive(a + 1, b)
+            if x != m:
+                l = recursive(x + 1, y)
 
-            if b != n:
-                r = recursive(a, b + 1)
+            if y != n:
+                r = recursive(x, y + 1)
 
-            memo[(a, b)] = r + l
+            memo[(x, y)] = r + l
 
-            return memo[(a, b)]
+            return memo[(x, y)]
 
         ans = recursive()
         print(runs)
@@ -32,4 +32,6 @@ class Solution:
 
 sol = Solution()
 
-print(sol.uniquePaths(3, 7))
+for x in range(3, 10):
+    y = 2
+    print(x, y, sol.uniquePaths(x, y))

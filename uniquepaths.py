@@ -1,6 +1,3 @@
-from functools import reduce
-
-
 class Solution:
     def uniquePaths(self, w: int, h: int) -> int:
         # finding the natural, triangular, tetrahedral etc numbers depending on inputs
@@ -18,6 +15,5 @@ class Solution:
         return fact
 
 
-# for x in range(1, 5):
-#    for y in range(1, 10):
+sol = Solution()
 print(sol.uniquePaths(3, 7))
