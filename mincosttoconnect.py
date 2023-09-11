@@ -1,38 +1,45 @@
 from typing import List
+import heapq
 
 
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
-        costs = {}
+        dist = lambda a, b: abs(points[a][0] - points[b][0]) + abs(
+            points[a][1] - points[b][1]
+        )
 
-        for a, (x1, y1) in enumerate(points):
-            for b, (x2, y2) in enumerate(points):
-                if a != b:
-                    if (b, a) in costs:
-                        costs[a, b] = costs[b, a]
-                    else:
-                        costs[a, b] = abs(x1 - x2) + abs(y1 - y2)
+        # triangle numbers basically, find all coordinate pairs
+        costs = {
+            (v1, v2): dist(v1, v2)
+            for v1 in range(len(points))
+            for v2 in range(v1 + 1, len(points))
+        }
 
-        remaining = [i for i in range(len(points) - 1)]
-        added = [len(points) - 1]
-        cost = 0
+        print(costs)
 
-        while remaining:
-            min_edge_v = 10**7
-            min_edge = -1
+        # prims!
+        # an indice set that represents the MST
+        mst = set()
+        total_cost = 0
+        min_heap = [[0, 0]]  # [cost, point]
 
-            for i in remaining:
-                for j in added:
-                    if costs[i, j] < min_edge_v:
-                        min_edge_v = costs[i, j]
-                        min_edge = i
+        # BFS
+        while len(mst) < len(points):
+            # why is the heap important??
+            cost, v1 = heapq.heappop(min_heap)
 
-            cost += min_edge_v
-            remaining.remove(min_edge)
-            added.append(min_edge)
+            if v1 in mst:
+                continue
+            total_cost += cost
 
-        return cost
+            mst.add(v1)
+
+            for v2 in range(len(points)):
+                if v2 not in mst:
+                    heapq.heappush(min_heap, [costs[min(v1, v2), max(v1, v2)], v2])
+
+        return total_cost
 
 
 sol = Solution()
-print(sol.minCostConnectPoints([[-1000000, -1000000], [1000000, 1000000]]))
+print(sol.minCostConnectPoints([[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]))
