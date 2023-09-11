@@ -4,33 +4,35 @@ from typing import List
 class Solution:
     def minCostConnectPoints(self, points: List[List[int]]) -> int:
         # create adjacency matrix and edge list
-        graph = [[0] * len(points) for i in range(len(points))]
         edges = {}
 
         for a, (x1, y1) in enumerate(points):
             for b, (x2, y2) in enumerate(points):
-                cost = abs(x1 - x2) + abs(y1 - y2) if a != b else -1
-                graph[a][b] = cost
-
                 if (b, a) not in edges and a != b:
+                    cost = abs(x1 - x2) + abs(y1 - y2) if a != b else -1
                     edges[(a, b)] = cost
 
         # sort the edges largest to smallest
         sorted_edges = sorted(
-            zip(edges.keys(), edges.values()), key=lambda x: edges[x[0]], reverse=True
+            zip(edges.keys(), edges.values()), key=lambda x: edges[x[0]]
         )
 
-        # remove edges if they are cyclic until we have
-        edges_removed = 0
+        # add edges if they do not form cycle
+        graph = [[-1 for a in range(len(points))] for b in range(len(points))]
+        edges = 0
         ret = 0
 
         for (a, b), cost in sorted_edges:
-            if edges_removed < len(points) + 1 and self.cycle(graph, b):
-                edges_removed += 1
-                graph[a][b] = -1
-                graph[b][a] = -1
-            else:
-                ret += cost
+            if edges < len(points) - 1:
+                graph[a][b] = cost
+                graph[b][a] = cost
+
+                if self.cycle(graph, b):
+                    graph[a][b] = -1
+                    graph[b][a] = -1
+                else:
+                    edges += 1
+                    ret += cost
 
         return ret
 
@@ -39,24 +41,24 @@ class Solution:
         node = edge
         stack = [(i, node) for i in range(len(graph)) if graph[node][i] != -1]
 
+        # cycle not detecting correctly gr
         while stack:
             node, parent = stack.pop()
 
-            if node == edge:
-                return True
+            if node not in visited:
+                # add all the children to the stack
+                stack += [
+                    (i, node)
+                    for i in range(len(graph))
+                    if (graph[node][i] != -1 and i != parent)
+                ]
+
+                visited.add(node)
             else:
-                if node not in visited:
-                    # add all the children to the stack
-                    stack += [
-                        (i, node)
-                        for i in range(len(graph))
-                        if (graph[node][i] != -1 and i != parent)
-                    ]
-
-                    visited.add(node)
-
+                return True
         return False  # went through all the nodes no cycle babyyy
 
 
 sol = Solution()
-print(sol.minCostConnectPoints(([[3, 12], [-2, 5], [-4, 1]])))
+# should be 102....
+print(sol.minCostConnectPoints([[-1000000, -1000000], [1000000, 1000000]]))
