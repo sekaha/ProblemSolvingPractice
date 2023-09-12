@@ -1,10 +1,18 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        max_string = 0
-        window = {c: 0 for c in set(s)}
+        focus = 0
+        budget = k
+        max_size = 0
 
-        for c in s:
-            pass
+        for i in range(len(s)):
+            if budget > 0:
+                if s[focus] != s[i]:
+                    budget -= 1
+            else:
+                while s[focus + 1] == s[focus + 1]:
+                    focus += 1
+                budget = k
+            max_dist = max(max_size, i - focus)
 
 
 sol = Solution()
