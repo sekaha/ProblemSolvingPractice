@@ -1,18 +1,18 @@
 class Solution:
     def uniquePaths(self, w: int, h: int) -> int:
-        # finding the natural, triangular, tetrahedral etc numbers depending on inputs
-        n, k = h + (w - 2), w - 1
-        fact = 1
+        # finding the simplex numbers (natural, triangular, tetrahedral...)  depending on inputs
+        n, k = h + w - 2, w - 1
+        result = 1
 
-        # binomial coefficinet
-        for i in range(1, k + 1):
+        # n choose k
+        for i in range(k):
             # n! / (n-k)!, because this part gets rid of the (n-k) numbers from n!
-            fact *= n - i + 1
+            result *= n - i
 
             # / k!
-            fact //= i
+            result //= i + 1
 
-        return fact
+        return result
 
 
 sol = Solution()
