@@ -8,11 +8,11 @@ class Solution:
         while l != len(s) and r != len(s):
             most_frequent = max(counts.values())
 
-            while r - l - k < most_frequent:
+            # valid window
+            if (r - l) - most_frequent <= k:
                 counts[s[r]] += 1
                 r += 1
-                dist = max(r - l, dist)
-            else:
+            else:  # invalid window, shift until valid
                 counts[s[l]] -= 1
                 l += 1
 
@@ -20,4 +20,4 @@ class Solution:
 
 
 sol = Solution()
-print(sol.characterReplacement("AABABBA", 1))
+print(sol.characterReplacement("AAAA", 2))
