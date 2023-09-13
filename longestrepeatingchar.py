@@ -1,24 +1,23 @@
 class Solution:
     def characterReplacement(self, s: str, k: int) -> int:
-        counts = {c: 0 for c in set(s)}
-        l, r = 0, 0
+        counts = [0] * 26
         max_element = 0
-        max_length = 0
+        max_count = 0
+        l = 0
 
-        # max f doesn't need to be proper, so we can just keep max_f constant even if it's not true for our window
-        while r < len(s):
-            counts[s[r]] += 1
-            max_element = max(max_element, counts[s[r]])
-            r += 1
+        # max f doesn't need to be proper, so we can just keep max_f constant even if it's not true for our current window window
+        for r in range(len(s)):
+            counts[ord(s[r]) - ord("A")] += 1
+            max_element = max(max_element, counts[ord(s[r]) - ord("A")])
 
             # invalid window, shift until valid
-            while (r - l) - max_element > k:
-                counts[s[l]] -= 1
+            while (r - l + 1) - max_element > k:
+                counts[ord(s[l]) - ord("A")] -= 1
                 l += 1
 
-            max_length = max(max_length, r - l)
+            max_count = max(max_count, r - l + 1)
 
-        return max_length
+        return max_count
 
 
 sol = Solution()
