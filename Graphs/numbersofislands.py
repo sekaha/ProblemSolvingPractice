@@ -8,6 +8,7 @@ class Solution:
         def check_neighbors(x, y):
             if 0 <= y < len(grid) and 0 <= x < len(grid[0]) and grid[y][x] == "1":
                 grid[y][x] = "0"
+
                 for x_off, y_off in [(1, 0), (-1, 0), (0, 1), (0, -1)]:
                     check_neighbors(x + x_off, y + y_off)
 
