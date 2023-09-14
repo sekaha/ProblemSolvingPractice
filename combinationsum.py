@@ -5,18 +5,17 @@ class Solution:
     def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
 
-        def helper(candidates, summation=0, path=[]):
-            if summation == target:
+        def backtrack(candidates, remaining, path=[]):
+            if remaining == 0:
                 yield path
 
             for i, n in enumerate(candidates):
-                if n + summation <= target:
-                    yield from helper(candidates[i:], summation + n, path + [n])
-                else:
+                if n > remaining:
                     break
+                yield from backtrack(candidates[i:], remaining - n, path + [n])
 
-        return list(helper(candidates))
+        return list(backtrack(candidates, target))
 
 
 sol = Solution()
-print(sol.combinationSum([2, 3, 6, 7], 7))
+print(sol.combinationSum([2, 3, 5], 8))
