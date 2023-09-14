@@ -10,7 +10,6 @@ class Solution:
         for n in nums[1:]:
             sub_sum = max(n, sub_sum + n)
             max_sum = max(max_sum, sub_sum)
-
         return max_sum
 
 
