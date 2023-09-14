@@ -2,9 +2,8 @@ class Solution:
     def uniquePaths(self, w: int, h: int) -> int:
         result = 1
 
-        for i in range(w - 1):
-            result *= (h + w - 2) - i
-            result //= i + 1
+        for i in range(1, w):
+            result = result * (h + i - 1) // i
 
         return result
 
