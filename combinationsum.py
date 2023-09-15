@@ -5,28 +5,17 @@ class Solution:
     def combinationSum2(self, candidates: List[int], target: int) -> List[List[int]]:
         candidates.sort()
 
-        def recursive(remaining, start=0):
-            if remaining == 0:
+        def recursive(target):
+            if target == 0:
                 return [[]]
 
             paths = []
 
-            prev_c = None
-
-            for i in range(start, len(candidates)):
-                if candidates[i] > remaining:
-                    break
-
-                # don't explore duplicate routes
-                if candidates[i] == prev_c:
-                    continue
-
-                prev_c = candidates[i]
-
-                paths += [
-                    [candidates[i]] + path
-                    for path in recursive(remaining - candidates[i], i + 1)
-                ]
+            for i, candidate in enumerate(candidates):
+                if candidate <= target:
+                    next_candidates = candidates[i + 1 :]
+                    for path in combination_sum(next_candidates, target - candidate):
+                        paths.append([candidate] + path)
 
             return paths
 
