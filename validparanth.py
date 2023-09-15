@@ -1,24 +1,39 @@
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        weight = 0
-        latent = 0
+        stack = []
 
-        for c in s:
+        def backtracking(s):
+            validity = False
+
+            if len(s) == 0:
+                return len(stack) == 0
+
+            # if the char is ( or can be swapped for (
+            c = "(" if s[0] == "*" else s[0]
+
             if c == "(":
-                weight += 1
-            elif c == ")":
-                if weight > 0:
-                    weight -= 1
+                stack.append("(")
+                validity |= backtracking(s[1:])
+                stack.pop()
+
+            # if the char is ) or can be swapped for )
+            c = ")" if s[0] == "*" else s[0]
+
+            if c == ")":
+                if len(stack) > 0:
+                    stack.pop()
+                    validity |= backtracking(s[1:])
+                    stack.append("(")
                 else:
-                    if latent <= 0:
-                        return False
-                    else:
-                        latent -= 1
+                    return False
 
-            elif c == "*":
-                latent += 1
+            # if the char is * and we should explore a route where it's ignored
+            if s[0] == "*":
+                validity |= backtracking(s[1:])
 
-        return weight == 0
+            return validity
+
+        return backtracking(s)
 
 
 sol = Solution()
@@ -29,8 +44,8 @@ print(sol.checkValidString("(*)"))
 print(sol.checkValidString("(*))"))
 print(sol.checkValidString("((*)"))
 
-# print(
-#    sol.checkValidString(
-#        "(((((*(()((((*((**(((()()*)()()()*((((**)())*)*)))))))(())(()))())((*()()(((()((()*(())*(()**)()(())"
-#    )
-# )
+print(
+    sol.checkValidString(
+        "(((((*(()((((*((**(((()()*)()()()*((((**)())*)*)))))))(())(()))())((*()()(((()((()*(())*(()**)()(())"
+    )
+)
