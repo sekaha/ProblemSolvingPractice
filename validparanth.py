@@ -1,44 +1,42 @@
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        stack = []
+        memo = {}
 
-        def backtracking(s):
-            validity = False
+        def backtracking(i=0, weight=0):
+            if i == len(s):
+                return weight == 0
 
-            if len(s) == 0:
-                return len(stack) == 0
+            if (i, weight) in memo:
+                return memo[i, weight]
+            else:
+                if s[i] == "(":
+                    validity = backtracking(i + 1, weight + 1)
 
-            # if the char is ( or can be swapped for (
-            c = "(" if s[0] == "*" else s[0]
+                if s[i] == ")":
+                    if weight > 0:
+                        validity = backtracking(i + 1, weight - 1)
+                    else:
+                        validity = False
 
-            if c == "(":
-                stack.append("(")
-                validity |= backtracking(s[1:])
-                stack.pop()
+                if s[i] == "*":
+                    validity = backtracking(i + 1, weight + 1)
 
-            # if the char is ) or can be swapped for )
-            c = ")" if s[0] == "*" else s[0]
+                    if weight > 0:
+                        validity |= backtracking(i + 1, weight - 1)
 
-            if c == ")":
-                if len(stack) > 0:
-                    stack.pop()
-                    validity |= backtracking(s[1:])
-                    stack.append("(")
-                else:
-                    return False
+                    validity |= backtracking(i + 1, weight)
 
-            # if the char is * and we should explore a route where it's ignored
-            if s[0] == "*":
-                validity |= backtracking(s[1:])
+                memo[(i, weight)] = validity
 
-            return validity
+                return validity
 
-        return backtracking(s)
+        return backtracking()
 
 
 sol = Solution()
 
-print(sol.checkValidString("(("))
+print(sol.checkValidString("(*()))*("))
+print(sol.checkValidString("*)*())"))
 print(sol.checkValidString("()"))
 print(sol.checkValidString("(*)"))
 print(sol.checkValidString("(*))"))
