@@ -19,8 +19,7 @@ class Solution:
 
             if max_lefts < 0:
                 return False
-                if min_lefts > 0:
-                    min_lefts -= 1
+
         return min_lefts <= 0 <= max_lefts
 
 
