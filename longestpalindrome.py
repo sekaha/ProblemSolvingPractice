@@ -3,30 +3,27 @@ class Solution:
         longest = ""
 
         for i in range(len(s)):
-            l = i
-            r = len(s) - 1
+            # checking for even and odd strings
+            for l_off in range(2):
+                l, r = i + l_off, i
+                pal = ""
 
-            s_l, s_r = "", ""
-
-            while r >= l:
-                if s[l] == s[r]:
-                    if l != r:
-                        s_l = s_l + s[l]
-                    s_r = s[r] + s_r
-                    l += 1
+                while r >= 0 and l < len(s) and s[l] == s[r]:
+                    if r != l:
+                        pal = s[l] + pal + s[r]
+                    else:
+                        pal = s[l]
                     r -= 1
-                else:
-                    s_l, s_r = "", ""
+                    l += 1
 
-                    if s[l] != s[r]:
-                        r -= 1
-
-            r = len(s) - 1
-
-            longest = s_l + s_r if len(longest) < len(s_l + s_r) else longest
+                if len(longest) < len(pal):
+                    longest = pal
+                    print(longest)
 
         return longest
 
 
 sol = Solution()
+print(sol.longestPalindrome("bb"))
+print(sol.longestPalindrome("babbc"))
 print(sol.longestPalindrome("xaabacxcabaax"))
