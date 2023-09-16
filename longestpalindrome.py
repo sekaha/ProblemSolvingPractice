@@ -4,26 +4,19 @@ class Solution:
 
         for i in range(len(s)):
             # checking for even and odd strings
-            for l_off in range(2):
-                l, r = i + l_off, i
-                pal = ""
+            for r_off in range(2):
+                r, l = i + r_off, i
 
-                while r >= 0 and l < len(s) and s[l] == s[r]:
-                    if r != l:
-                        pal = s[l] + pal + s[r]
-                    else:
-                        pal = s[l]
-                    r -= 1
-                    l += 1
+                while l >= 0 and r < len(s) and s[l] == s[r]:
+                    l -= 1
+                    r += 1
 
-                if len(longest) < len(pal):
-                    longest = pal
-                    print(longest)
+                longest = max(longest, s[l + 1 : r], key=len)
 
         return longest
 
 
 sol = Solution()
 print(sol.longestPalindrome("bb"))
-print(sol.longestPalindrome("babbc"))
+print(sol.longestPalindrome("bbabc"))
 print(sol.longestPalindrome("xaabacxcabaax"))
