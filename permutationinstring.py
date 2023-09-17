@@ -1,6 +1,9 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
-        letters = set(s2)
+        if len(s2) < len(s1):
+            return False
+
+        letters = set(s1 + s2)
         s1_count = {c: 0 for c in letters}
         s2_count = {c: 0 for c in letters}
 
@@ -11,7 +14,7 @@ class Solution:
 
         matches = sum([s1_count[c] == s2_count[c] for c in letters])
 
-        l, r = 0, len(s1) - 1
+        l, r = 0, len(s1)
 
         while r < len(s2):
             if matches == len(letters):
@@ -39,4 +42,4 @@ class Solution:
 
 
 sol = Solution()
-print(sol.checkInclusion("ab", "bbbbbbbab"))
+print(sol.checkInclusion("ab", "eidbaooo"))
