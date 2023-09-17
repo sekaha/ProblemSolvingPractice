@@ -1,8 +1,7 @@
 class Solution:
     def checkInclusion(self, s1: str, s2: str) -> bool:
         if len(s2) < len(s1):
-            return False
-
+            return false
         letters = set(s1 + s2)
         s1_count = {c: 0 for c in letters}
         s2_count = {c: 0 for c in letters}
