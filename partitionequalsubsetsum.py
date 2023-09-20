@@ -3,34 +3,35 @@ from typing import List
 
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        stack1, stack2 = [], []
-        answers = []
+        # what num we're on in the list
+        # which list was last added to
+        partition1, partition2 = [], []
+        stack = [(0, 0)]
 
-        def split(i=0):
+        while stack:
+            print(partition1, partition2)
+            i, partition = stack.pop()
+
             if i == len(nums):
-                if sum(stack1) == sum(stack2):
-                    answers.append((stack1.copy(), stack2.copy()))
-                return
+                if sum(partition1) == sum(partition2):
+                    return True
+            else:
+                stack.append((i + 1, 0))
 
-            for s in stack1, stack2:
-                s.append(nums[i])
-                split(i + 1)
-                s.pop()
+                if partition == 0:
+                    partition1.append(nums[i])
+                elif partition == 1:
+                    partition2.append(nums[i])
+                    partition1.pop()
+                elif partition == 2:
+                    partition2.pop()
+
+                if partition < 2:
+                    stack.append((i, partition + 1))
 
         split()
         print(answers)
 
-        # def split(i=0):
-        #    if i == len(nums) and (sum(stack1) == sum(stack2)):
-        #        yield (stack1.copy(), stack2.copy())
-        #    for j in range(i, len(nums)):
-        #        for stack in (stack1, stack2):
-        #            stack.append(nums[j])
-        #            yield from split(i + 1)
-        #            stack.pop()
-
-        # print(list(split()))
-
 
 sol = Solution()
-sol.canPartition([1, 5, 11, 5])
+print(sol.canPartition([1, 5, 11, 5]))
