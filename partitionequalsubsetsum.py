@@ -2,36 +2,34 @@ from typing import List
 
 
 class Solution:
-    def canPartition(self, nums: List[int]) -> bool:
+    def canpartition(self, nums: List[int]) -> bool:
         # what num we're on in the list
         # which list was last added to
-        partition1, partition2 = [], []
+        part1, part2 = [], []
         stack = [(0, 0)]
 
         while stack:
-            print(partition1, partition2)
-            i, partition = stack.pop()
+            i, seen = stack.pop()
 
             if i == len(nums):
-                if sum(partition1) == sum(partition2):
+                if sum(part1) == sum(part2):
                     return True
             else:
-                if partition == 0:
-                    partition1.append(nums[i])
-                elif partition == 1:
-                    partition2.append(nums[i])
-                    partition1.pop()
-                elif partition == 2:
-                    partition2.pop()
+                if seen == 0:
+                    part1.append(nums[i])
+                elif seen == 1:
+                    part2.append(nums[i])
+                    part1.pop()
+                elif seen == 2:
+                    part2.pop()
 
-                if partition < 2:
-                    stack.append((i, partition + 1))
+                if seen < 2:
+                    stack.append((i, seen + 1))
 
                 stack.append((i + 1, 0))
 
-        split()
-        print(answers)
+        return False
 
 
 sol = Solution()
-print(sol.canPartition([1, 5, 11, 5]))
+print(sol.canpartition([1, 5, 11, 5]))
