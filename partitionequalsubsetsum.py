@@ -16,8 +16,6 @@ class Solution:
                 if sum(partition1) == sum(partition2):
                     return True
             else:
-                stack.append((i + 1, 0))
-
                 if partition == 0:
                     partition1.append(nums[i])
                 elif partition == 1:
@@ -28,6 +26,8 @@ class Solution:
 
                 if partition < 2:
                     stack.append((i, partition + 1))
+
+                stack.append((i + 1, 0))
 
         split()
         print(answers)
