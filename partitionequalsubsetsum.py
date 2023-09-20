@@ -5,6 +5,7 @@ class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         # what num we're on in the list
         # which list was last added to
+        memo = {}
         summation = sum(nums)
         halfsum = summation // 2
 
