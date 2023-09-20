@@ -28,6 +28,7 @@ class Solution:
 
             if v1 in mst:
                 continue
+
             total_cost += cost
 
             mst.add(v1)
@@ -40,4 +41,4 @@ class Solution:
 
 
 sol = Solution()
-print(sol.minCostConnectPoints([[0, 0], [2, 2], [3, 10], [5, 2], [7, 0]]))
+print(sol.minCostConnectPoints([[2, 3], [2, 0], [2, 1]]))
