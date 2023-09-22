@@ -3,30 +3,20 @@ from typing import List
 
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
-        # what num we're on in the list
-        # which list was last added to
-        memo = {}
-        summation = sum(nums)
-        halfsum = summation // 2
-
-        if summation % 2:
+        if sum(nums) % 2:
             return False
 
-        traversed = [(0, halfsum)]
+        target = sum(nums) // 2
 
-        while traversed:
-            index, target = traversed.pop()
+        combo_sum = set([0])
 
-            if index < len(nums):
-                if target - nums[index] == 0:
+        for n in nums:
+            for combo in combo_sum.copy():
+                if combo + n == target:
                     return True
-
-                if nums[index] < target:
-                    traversed.append((index + 1, target - nums[index]))
-                traversed.append((index + 1, target))
-
+                combo_sum.add(combo + n)
         return False
 
 
 sol = Solution()
-print(sol.canPartition([14, 9, 8, 4, 3, 2]))
+print(sol.canPartition([1, 5, 11, 5]))
