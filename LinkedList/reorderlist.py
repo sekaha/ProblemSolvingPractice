@@ -8,27 +8,31 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
-        front = head
 
-        # move the front node pointer towards the back (middle by end) until there are no more children
-        for i in range(2):
-            print(front.val)
-            # init them to the same position
-            back = front
+        # finding the length of the list
+        fast, slow = head, head
 
-            # zoom the back pointer the n-1 node
-            while back.next.next != None:
-                back = back.next
+        # wow, so it evaluates fast before fast.next... i did not know
+        # find the middle of the list
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
 
-            print(back.val)
+        # reverse the latter half of the list
+        prev, curr, reverse_head, slow.next = None, slow.next, None, None
 
-            # To traverse the nodes in original order, we need a temp next node
-            tmp_next = front.next
+        while curr:
+            reverse_head = curr.next
+            curr.next = prev
+            prev = curr
+            curr = reverse_head
 
-            print(tmp_next.val)
+        list1, list2 = head, prev
 
-            # insert back node between front and front.next
-            # backnode's prev needs its next set to None
-            front.next, back.next.next, back.next = back.next, front.next, None
-
-            front = tmp_next
+        while list2:
+            tmp_next1 = list1.next
+            tmp_next2 = list2.next
+            list1.next = list2
+            list2.next = tmp_next1
+            list1 = tmp_next1
+            list2 = tmp_next2
